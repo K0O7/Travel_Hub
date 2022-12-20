@@ -1,0 +1,86 @@
+﻿@model Travel_Hub.Models.Wycieczka
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Wycieczka</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Max_osob)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Max_osob)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cena)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cena)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Opis)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Stan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Osrodki)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Osrodki.Adres)
+        </dd>
+    </dl>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PotwierdzRezerwacje" method="post">
+            <div class="form-group">
+                <input type="hidden" name="idWycieczki" value="@Model.WycieczkaId" />
+            </div>
+            <div class="form-group">
+                <label for="iloscOs" class="control-label">Ilość osób</label>
+                <a asp-action="AddItem" asp-route-id="@(Model.WycieczkaId)">+</a>
+                <label name="iloscOs" class="control-label">@ViewBag.Osoby</label>
+                <a asp-action="MinusItem" asp-route-id="@(Model.WycieczkaId)">-</a>
+            </div>
+            <div class="form-group">
+                <label for="Price" class="control-label">pełna cena</label>
+                <label name="Price" class="control-label">@ViewBag.Price </label>
+            </div>
+            <div class="form-group">
+                <label for="pokojWybrany" class="control-label">Wybierz pokoj</label>
+                <select id="pokojWybrany" name="pokojWybrany" asp-items="@ViewBag.PokojeDoWyboru"></select>
+            </div>
+            <div class="form-group">
+                <label for="wyzywienieWybrane" class="control-label">Wybierz wyzywienie</label>
+                <select id="wyzywienieWybrane" name="wyzywienieWybrane" asp-items="@ViewBag.WyzywieniaDoWyboru"></select>
+            </div>
+            <div class="form-group">
+                <label for="miejsceStartuWybrane" class="control-label">Wybierz miejsce startu</label>
+                <select id="miejsceStartuWybrane" name="miejsceStartuWybrane" asp-items="@ViewBag.MiejscaStartuDoWyboru"></select>
+            </div>
+            <div class="form-group">
+                <input type="@ViewBag.RezButt" value="Rezerwoj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    @if (User.IsInRole("Pracownik"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.WycieczkaId">Edit</a>
+    }
+    | <a asp-action="Index">Back to List</a>
+</div>

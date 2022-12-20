@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Travel_Hub.Models.Wycieczka>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@using (Html.BeginForm())
+{
+<p>
+    Nazwa osrodka: <input id="searchStringName" name="searchStringName" class="form-control" value="@ViewBag.Osrodki" />
+    Maksymalna liczba osob: <input id="liczbaOsob" name="liczbaOsob" class="form-control" value="@ViewBag.maxOs" />
+    Miejsce Docelowe: <input id="dokad" name="dokad" class="form-control" value="@ViewBag.dokad" />
+    Miejsce Wyjazdu: <input id="skad" name="skad" class="form-control" value="@ViewBag.skad" />
+    Maxymalna cena: <input id="maxCena" name="maxCena" class="form-control" value="@ViewBag.maxCena" />
+    <input type="submit" value="Search" />
+</p>
+
+
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Max_osob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Opis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Osrodki.Nazwa_osrodka)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Max_osob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cena)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Osrodki.Nazwa_osrodka)
+                </td>
+                <td>
+                    @if (User.IsInRole("Pracownik"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.WycieczkaId">Edit</a>
+                    }
+                    | <a asp-action="Details" asp-route-id="@item.WycieczkaId">Details</a> |
+                    @if (User.IsInRole("Pracownik"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.WycieczkaId">Delete</a>
+                    }
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,141 @@
+﻿@model Travel_Hub.Models.Wycieczka
+
+@{
+    ViewData["Title"] = "Potwierdz Rezerwacje";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Wycieczka</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Max_osob)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Max_osob)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cena)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cena)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Opis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Stan)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Stan)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Osrodki)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Osrodki.Adres)
+        </dd>
+    </dl>
+</div>
+
+<h3>Podsumowanie:</h3>
+
+<dl class="row">
+    <dt class="col-sm-2">
+        iloscOs:
+    </dt>
+    <dd class="col-sm-10">
+        @ViewData["iloscOs"]
+    </dd>
+    <dt class="col-sm-2">
+        pokojWybrany:
+    </dt>
+    <dd class="col-sm-10">
+        @ViewData["pokojWybrany"]
+    </dd>
+    <dt class="col-sm-2">
+        Price:
+    </dt>
+    <dd class="col-sm-10">
+        @ViewData["Price"]
+    </dd>
+    <dt class="col-sm-2">
+        Wybrane wyzywienie:
+    </dt>
+    <dd class="col-sm-10">
+        @ViewData["wyzywienieWybrane"]
+    </dd>
+    <dt class="col-sm-2">
+        Wybrane miejsce startu:
+    </dt>
+    <dd class="col-sm-10">
+        @ViewData["miejsceStartuWybrane"]
+    </dd>
+</dl>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RejestrujRezerwacje" method="post">
+            <div class="form-group">
+
+                @for (var i = 0; i < (int)@ViewData["iloscOs"]; i++)
+                {
+                    <tr>
+                        <td>
+                            <div>
+                                <input type="radio" name="@ViewData["plec"+@i]" value="Male" required /> Male
+                                <input type="radio" name="@ViewData["plec"+@i]" value="Female" required /> Female
+                            </div>
+                        </td>
+                        <td>
+                            <input id="@ViewData["imie"+@i]" name="@ViewData["imie"+@i]" class="form-control" /> Imie
+                        </td>
+                        <td>
+                            <input id="@ViewData["nazwisko"+@i]" name="@ViewData["nazwisko"+@i]" class="form-control" /> Nazwisko
+                        </td>
+                    </tr>
+                }
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="MiejsceStartuId" name="MiejsceStartuId" class="form-control" value="@ViewData["miejsceStartuWybraneId"]" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="OpcjeWyzywieniaId" name="OpcjeWyzywieniaId" class="form-control" value="@ViewData["wyzywienieWybraneId"]" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="RodzajePokoiId" name="RodzajePokoiId" class="form-control" value="@ViewData["pokojWybranyId"]" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="OsrodkiId" name="OsrodkiId" class="form-control" value="@Model.Osrodki.OsrodkiId" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="OsrodkiId" name="OsrodkiId" class="form-control" value="@Model.Osrodki.OsrodkiId" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="WycieczkaId" name="WycieczkaId" class="form-control" value="@Model.WycieczkaId" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="Price" name="Price" class="form-control" value="@ViewData["Price"]" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Potwierdz Rezerwacje" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@*
+    do post
+    @ViewData["miejsceStartuWybraneId"]
+    @ViewData["wyzywienieWybraneId"]
+    @ViewData["Price"]
+    @ViewData["pokojWybranyId"]
+    @Model.Osrodki.OsrodkiId
+    @Model.WycieczkaId
+    dodac miejsce na dane osobowe zalezne od ilosci osob
+*@
